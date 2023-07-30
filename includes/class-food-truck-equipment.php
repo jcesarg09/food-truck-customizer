@@ -16,6 +16,7 @@ class Food_Truck_Equipment {
         add_action( 'init', array( $this, 'register_equipment_post_type' ) );
         add_action( 'add_meta_boxes', array( $this, 'add_equipment_meta_boxes' ) );
         add_action( 'save_post', array( $this, 'save_equipment_meta' ) );
+        add_action('init', array($this, 'register'));
     }
 
     /**
@@ -52,6 +53,10 @@ class Food_Truck_Equipment {
             'hierarchical'       => false,
             'menu_position'      => null,
             'supports'           => array( 'title', 'editor', 'thumbnail' )
+            'public'             => true,
+            'label'              => 'Equipment',
+            'menu_icon'          => 'dashicons-hammer',
+            'supports'           => array('title', 'editor', 'thumbnail'),
         );
 
         register_post_type( 'ftc_equipment', $args );
@@ -64,6 +69,38 @@ class Food_Truck_Equipment {
         add_meta_box( 'equipment_details', __( 'Equipment Details', 'food-truck-customizer' ), array( $this, 'render_equipment_meta_box' ), 'ftc_equipment' );
     }
 
+    public function save_equipment_meta($post_id) {
+        // Check if our nonce is set.
+        if (!isset($_POST['ftc_equipment_nonce'])) {
+            return $post_id;
+        }
+
+        $nonce = $_POST['ftc_equipment_nonce'];
+
+        // Verify that the nonce is valid.
+        if (!wp_verify_nonce($nonce, 'ftc_equipment_data')) {
+            return $post_id;
+        }
+
+        // If this is an autosave, our form has not been submitted, so we don't want to do anything.
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return $post_id;
+        }
+
+        // Check the user's permissions.
+        if ('equipment' == $_POST['post_type']) {
+            if (!current_user_can('edit_post', $post_id)) {
+                return $post_id;
+            }
+        }
+
+        // Sanitize user input.
+        $equipment_price = sanitize_text_field($_POST['ftc_equipment_price']);
+
+        // Update the meta field in the database.
+        update_post_meta($post_id, '_ftc_equipment_price', $equipment_price);
+    }
+
     // Render the Equipment meta box.
 public function render_equipment_meta_box( $post ) {
     // Fetch values if they exist
@@ -71,6 +108,12 @@ public function render_equipment_meta_box( $post ) {
     $height = get_post_meta( $post->ID, '_ftc_height', true );
     $price = get_post_meta( $post->ID, '_ftc_price', true );
     $orientation = get_post_meta( $post->ID, '_ftc_orientation', true );
+    
+ // Add a nonce field so we can check for it later.
+ wp_nonce_field('ftc_equipment_data', 'ftc_equipment_nonce');
+
+ // Retrieve an existing value from the database.
+ $equipment_price = get_post_meta($post->ID, '_ftc_equipment_price', true);
 
     // Nonce field for security
     wp_nonce_field( 'ftc_equipment_nonce', 'ftc_equipment_nonce_field' );
@@ -90,6 +133,10 @@ public function render_equipment_meta_box( $post ) {
     echo '<option value="front-facing" ' . selected( $orientation, 'front-facing', false ) . '>Front Facing</option>';
     echo '<option value="back-facing" ' . selected( $orientation, 'back-facing', false ) . '>Back Facing</option>';
     echo '</select>';
+    // Display the form, using the current value.
+    echo '<label for="ftc_equipment_price">Price</label>';
+    echo '<input type="text" id="ftc_equipment_price" name="ftc_equipment_price" value="' . esc_attr($equipment_price) . '">';
+
 }
 
 // Save the Equipment meta box data.
@@ -113,5 +160,5 @@ public function save_equipment_meta( $post_id ) {
 
 }
 
-// Initialize the class
-new Food_Truck_Equipment();
+// In your main plugin file or a bootstrap file
+$food_truck_equipment = new Food_Truck_Equipment();

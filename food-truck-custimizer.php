@@ -37,6 +37,15 @@ function ftc_settings_page_html() {
         return;
     }
 
+     // Load the settings page template
+     include plugin_dir_path(__FILE__) . 'templates/settings.php';
+    }
+    
+    // Corrected the register_activation_hook to reference the main plugin file
+    register_activation_hook( plugin_basename( __DIR__ ) . '/food-truck-customizer.php', 'ftc_activate_plugin' );
+    
+    // ... (rest of the code remains unchanged)
+
     // Add nonce field for security
     $nonce = wp_create_nonce('ftc_save_settings');
     ?>
@@ -100,5 +109,22 @@ function ftc_enqueue_frontend_scripts() {
     // Enqueue the customizer interface script and style
     wp_enqueue_script('ftc_customizer_js', plugins_url('assets/js/customizer.js', __FILE__), array('jquery', 'jquery-ui-draggable', 'jquery-ui-droppable'), '1.0.0', true);
     wp_enqueue_style('ftc_customizer_css', plugins_url('assets/css/customizer.css', __FILE__));
+
+    // Localize script with custom settings
+    $custom_settings = array(
+        'gridSize' => get_option('ftc_grid_size', 20)
+    );
+    wp_localize_script('ftc_customizer_js', 'ftcSettings', $custom_settings);
+
 }
 add_action('wp_enqueue_scripts', 'ftc_enqueue_frontend_scripts');
+
+function ftc_enqueue_admin_scripts() {
+    // Enqueue the WordPress Media Uploader scripts
+    wp_enqueue_media();
+
+    // Enqueue the admin.js script
+    wp_enqueue_script('ftc_admin_js', plugins_url('assets/js/admin.js', __FILE__), array('jquery'), '1.0.0', true);
+}
+
+add_action('admin_enqueue_scripts', 'ftc_enqueue_admin_scripts');

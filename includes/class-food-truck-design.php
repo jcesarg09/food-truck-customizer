@@ -45,4 +45,5 @@ class Food_Truck_Design {
 function ftc_activate_plugin() {
     Food_Truck_Design::register_design_post_type();
 }
-register_activation_hook(__FILE__, 'ftc_activate_plugin');
+register_activation_hook( plugin_basename( __DIR__ ) . '/food-truck-customizer.php', 'ftc_activate_plugin' );
+

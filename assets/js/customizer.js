@@ -15,6 +15,9 @@ jQuery(document).ready(function($) {
       }
   }
 
+// Retrieve grid size from the server-side setting
+const gridSize = <?php echo isset($settings['grid_size']) ? intval($settings['grid_size']) : 20; ?>;
+
   // Implement the checkOverlap function here
   function checkOverlap($item) {
       const itemPosition = $item.position();
@@ -351,7 +354,8 @@ function updateItemizedList() {
   }
 });
 
-const gridSize = 20; // Define grid size in pixels
+const gridSize = ftcSettings.gridSize || 20; // Use the setting value or default to 20 pixels
+
 
 // When dragging an equipment item
 $(".equipment-item").draggable({

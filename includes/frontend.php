@@ -13,13 +13,17 @@ function ftc_enqueue_frontend_scripts() {
 }
 add_action('wp_enqueue_scripts', 'ftc_enqueue_frontend_scripts');
 
-// Display the visual customizer on the product page
+// Display the visual customizer on the frontend
 function ftc_display_customizer() {
-    // Query the equipment from the database
-    $args = array(
-        'post_type' => 'ftc_equipment',
-        'posts_per_page' => -1,
-    );
+    // Check if the current page is the customizer page (you might need to adjust this condition)
+    if (is_page('customizer')) {
+        
+        // Query the equipment from the database
+        $args = array(
+            'post_type' => 'ftc_equipment',
+            'posts_per_page' => -1,
+        );
+        
     $query = new WP_Query($args);
     if ($query->have_posts()) {
         echo '<div id="ftc_customizer" class="w-full max-w-screen-xl mx-auto relative p-4 border-2 border-dashed">'; // Tailwind classes
@@ -38,7 +42,11 @@ function ftc_display_customizer() {
     }
     wp_reset_postdata();
 }
+        // Load the customizer template (you might need to create this template file)
+        include plugin_dir_path(__FILE__) . 'templates/customizer-interface.php';
+    }
 
+add_action('the_content', 'ftc_display_customizer');
 // Shortcode to display the customizer
 function ftc_customizer_shortcode() {
     ob_start();
