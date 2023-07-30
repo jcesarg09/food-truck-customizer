@@ -1,0 +1,62 @@
+<div class="equipment-item" data-name="Oven" data-width="1.5" data-height="2" data-price="500" data-description="High-quality oven.">Oven</div>
+
+
+<div id="ftc_customizer">
+    <!-- Embed your SVG here -->
+    <svg width="500" height="300">
+        <!-- SVG content goes here -->
+    </svg>
+</div>
+
+
+
+Implementing a base template using SVG (Scalable Vector Graphics) can be a great choice because SVGs are resolution-independent and can scale without loss of clarity. This is especially useful for a visual customizer where users might zoom in and out.
+
+Here's a step-by-step guide to implementing a base template for your food truck or trailer using SVG:
+
+1. Create or Obtain the SVG:
+First, you'll need an SVG representation of the empty food truck or trailer. You can create this using vector graphic design software like Adobe Illustrator or Inkscape. Alternatively, you might find suitable SVGs online or hire a designer to create one for you.
+
+2. Embed the SVG in Your HTML:
+Once you have the SVG, you can embed it directly into your HTML. This allows you to manipulate the SVG using JavaScript/jQuery.
+
+html
+Copy code
+<div id="ftc_customizer">
+    <!-- Embed your SVG here -->
+    <svg width="500" height="300">
+        <!-- SVG content goes here -->
+    </svg>
+</div>
+3. Add Interactive Areas:
+If you want certain parts of the SVG to be interactive (e.g., areas where equipment can be placed), you can define these areas using SVG shapes like <rect>, <circle>, etc., and give them unique IDs or classes.
+
+xml
+Copy code
+<rect id="cooking_area" x="50" y="50" width="200" height="100" fill="transparent" stroke="black"/>
+4. Use JavaScript/jQuery to Make It Interactive:
+With the SVG embedded in your HTML, you can use jQuery to interact with it. For instance, you can highlight the cooking area when it's hovered:
+
+javascript
+Copy code
+$("#cooking_area").hover(function() {
+    $(this).attr("fill", "#e0e0e0");  // Change fill color on hover
+}, function() {
+    $(this).attr("fill", "transparent");  // Revert fill color on mouse out
+});
+5. Place Equipment on the SVG:
+When a user drags and drops equipment onto the SVG, you can append new SVG elements (representing the equipment) to the base SVG. For example, if a user adds an oven, you might append an SVG <image> element to represent it.
+
+6. Style and Animate with CSS:
+SVGs can be styled and animated using CSS. This can be useful for creating hover effects, transitions, etc.
+
+7. Consider Using an SVG JavaScript Library:
+If you're planning to do a lot of SVG manipulation, consider using a dedicated SVG library like SVG.js or Snap.svg. These libraries provide convenient methods for creating, animating, and manipulating SVGs.
+
+Final Thoughts:
+Using SVGs for the base template of your food truck/trailer customizer is a solid choice. SVGs are lightweight, scalable, and can be easily manipulated using JavaScript. However, ensure that the SVGs are optimized and not overly complex, as very detailed SVGs can impact performance.
+
+
+
+
+

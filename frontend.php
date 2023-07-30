@@ -169,3 +169,20 @@ function ftc_apply_snap_and_orientation() {
     <?php
 }
 add_action('wp_footer', 'ftc_apply_snap_and_orientation');
+
+<input type="text" id="equipmentSearch" placeholder="Search equipment...">
+
+<input type="text" id="discountCode" placeholder="Enter discount code">
+<button id="applyDiscount">Apply</button>
+
+<button id="listView" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    List View
+</button>
+<button id="gridView" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">
+    Grid View
+</button>
+
+
+<div id="costBreakdown" class="bg-white p-4 rounded shadow-md">
+    <!-- Display individual equipment costs and total here -->
+</div>

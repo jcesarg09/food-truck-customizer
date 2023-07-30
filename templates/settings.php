@@ -13,3 +13,7 @@
         ?>
     </form>
 </div>
+
+<label for="taxRate">Tax Rate:</label>
+<input type="number" id="taxRate" name="taxRate" value="<?php echo get_option('taxRate'); ?>">
+

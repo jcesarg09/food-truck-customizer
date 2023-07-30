@@ -351,3 +351,45 @@ function updateItemizedList() {
   }
 });
 
+const gridSize = 20; // Define grid size in pixels
+
+// When dragging an equipment item
+$(".equipment-item").draggable({
+    grid: [gridSize, gridSize]
+});
+
+$("#equipmentSearch").on("keyup", function() {
+    let value = $(this).val().toLowerCase();
+    $(".equipment-item").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+    });
+});
+
+$("#applyDiscount").click(function() {
+    let code = $("#discountCode").val();
+    // Validate the code and apply the discount
+});
+
+$("#listView").click(function() {
+    $(".equipment-library").addClass("list-view");
+    $(".equipment-library").removeClass("grid-view");
+});
+
+$("#gridView").click(function() {
+    $(".equipment-library").addClass("grid-view");
+    $(".equipment-library").removeClass("list-view");
+});
+
+function updateCostBreakdown() {
+    let totalCost = 0;
+    // Loop through each equipment item added by the user
+    $(".added-equipment").each(function() {
+        let itemCost = $(this).data("price");
+        totalCost += itemCost;
+        // Add item cost to the breakdown
+        $("#costBreakdown").append("<p>" + $(this).data("name") + ": $" + itemCost + "</p>");
+    });
+    // Display the total cost
+    $("#costBreakdown").append("<p>Total: $" + totalCost + "</p>");
+}
+

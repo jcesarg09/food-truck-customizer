@@ -121,3 +121,6 @@ function ftc_enqueue_customizer_scripts() {
 }
 add_action('admin_enqueue_scripts', 'ftc_enqueue_customizer_scripts');
 
+WC()->cart->add_to_cart($product_id, 1, '', array(), array('custom_data' => $customDesignData));
+
+
