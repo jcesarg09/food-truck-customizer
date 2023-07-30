@@ -8,11 +8,9 @@ Author: July Csar
 
 // Define constants
 define('FTC_PLUGIN_DIR', plugin_dir_path(__FILE__));
-// Inside food-truck-customizer.php
-require_once plugin_dir_path( __FILE__ ) . 'includes/class-food-truck-equipment.php';
-
 
 // Include necessary files
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-food-truck-equipment.php';
 require_once FTC_PLUGIN_DIR . 'includes/admin.php';
 require_once FTC_PLUGIN_DIR . 'includes/frontend.php';
 
@@ -27,25 +25,17 @@ function ftc_register_feedback_post_type() {
 }
 add_action('init', 'ftc_register_feedback_post_type');
 
-// File: food-truck-customizer.php
-
 // Add a new action hook for the settings page
 function ftc_settings_page() {
     add_menu_page('Food Truck Customizer Settings', 'FTC Settings', 'manage_options', 'ftc_settings', 'ftc_settings_page_html', 'dashicons-admin-generic');
 }
 add_action('admin_menu', 'ftc_settings_page');
 
-// File: food-truck-customizer.php
-
 function ftc_settings_page_html() {
     // Check user capabilities
     if (!current_user_can('manage_options')) {
         return;
     }
-
-    // Load the settings page template
-    include plugin_dir_path(__FILE__) . 'templates/settings.php';
-}
 
     // Add nonce field for security
     $nonce = wp_create_nonce('ftc_save_settings');
@@ -67,8 +57,6 @@ function ftc_settings_page_html() {
     </div>
     <?php
 }
-
-// ... (existing code)
 
 // Function to add item to WooCommerce cart
 function add_equipment_items_to_cart() {
