@@ -47,14 +47,6 @@ function ftc_settings_page_html() {
     include plugin_dir_path(__FILE__) . 'templates/settings.php';
 }
 
-// File: food-truck-customizer.php
-
-function ftc_settings_page_html() {
-    // Check user capabilities
-    if (!current_user_can('manage_options')) {
-        return;
-    }
-
     // Add nonce field for security
     $nonce = wp_create_nonce('ftc_save_settings');
     ?>
@@ -113,14 +105,12 @@ function ftc_start_session() {
 }
 add_action('init', 'ftc_start_session');
 
-// Enqueue customizer scripts and styles
-function ftc_enqueue_customizer_scripts() {
-    // Enqueue your customizer JavaScript and CSS files here
-    wp_enqueue_script('ftc_customizer_js', plugins_url('js/customizer.js', __FILE__), array('jquery', 'jquery-ui-draggable', 'jquery-ui-droppable'), '1.0.0', true);
-    wp_enqueue_style('ftc_customizer_css', plugins_url('css/customizer.css', __FILE__));
+// Enqueue frontend scripts and styles
+function ftc_enqueue_frontend_scripts() {
+    // Enqueue your other scripts and styles here
+    
+    // Enqueue the customizer interface script and style
+    wp_enqueue_script('ftc_customizer_js', plugins_url('assets/js/customizer.js', __FILE__), array('jquery', 'jquery-ui-draggable', 'jquery-ui-droppable'), '1.0.0', true);
+    wp_enqueue_style('ftc_customizer_css', plugins_url('assets/css/customizer.css', __FILE__));
 }
-add_action('admin_enqueue_scripts', 'ftc_enqueue_customizer_scripts');
-
-WC()->cart->add_to_cart($product_id, 1, '', array(), array('custom_data' => $customDesignData));
-
-
+add_action('wp_enqueue_scripts', 'ftc_enqueue_frontend_scripts');
