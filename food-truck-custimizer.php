@@ -42,7 +42,7 @@ function ftc_settings_page_html() {
     }
     
     // Corrected the register_activation_hook to reference the main plugin file
-    register_activation_hook( plugin_basename( __DIR__ ) . '/food-truck-customizer.php', 'ftc_activate_plugin' );
+    register_activation_hook( __FILE__, 'ftc_activate_plugin' );
     
     // ... (rest of the code remains unchanged)
 
