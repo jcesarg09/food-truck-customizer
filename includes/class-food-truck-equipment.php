@@ -158,7 +158,7 @@ public function save_equipment_meta( $post_id ) {
     // ... [rest of the function remains the same]
 
 }
-
+}
 function initialize_food_truck_equipment() {
     // Instantiate the Food_Truck_Equipment class
     $food_truck_equipment = new Food_Truck_Equipment();
