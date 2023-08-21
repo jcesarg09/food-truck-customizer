@@ -159,5 +159,11 @@ public function save_equipment_meta( $post_id ) {
 
 }
 
-// In your main plugin file or a bootstrap file
-$food_truck_equipment = new Food_Truck_Equipment();
+function initialize_food_truck_equipment() {
+    // Instantiate the Food_Truck_Equipment class
+    $food_truck_equipment = new Food_Truck_Equipment();
+    
+    // Any other initialization code related to this class can go here
+}
+add_action('plugins_loaded', 'initialize_food_truck_equipment');
+
