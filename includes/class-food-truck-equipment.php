@@ -52,7 +52,7 @@ class Food_Truck_Equipment {
             'has_archive'        => true,
             'hierarchical'       => false,
             'menu_position'      => null,
-            'supports'           => array( 'title', 'editor', 'thumbnail' )
+            'supports'           => array( 'title', 'editor', 'thumbnail' ),
             'public'             => true,
             'label'              => 'Equipment',
             'menu_icon'          => 'dashicons-hammer',
