@@ -371,11 +371,12 @@ function ftc_register_customizer_settings() {
     add_settings_field(
         'ftc_tax_rate_field',
         'Tax Rate',
-        '
-// Register a new section for WooCommerce Integration
-function ftc_register_customizer_settings() {
-    // ... [Your existing code]
+        'ftc_tax_rate_field_callback', // This seems to be missing in your provided code
+        'ftc_customizer',
+        'ftc_pricing_section'
+    );
 
+    // Register a new section for WooCommerce Integration
     add_settings_section(
         'ftc_woocommerce_section',
         'WooCommerce Integration',
@@ -392,6 +393,7 @@ function ftc_register_customizer_settings() {
         'ftc_woocommerce_section'
     );
 }
+
 add_action('admin_init', 'ftc_register_customizer_settings');
 
 // Callback function for WooCommerce section
