@@ -64,8 +64,9 @@ function ftc_register_equipment_post_type() {
 add_action('init', 'ftc_register_equipment_post_type');
 
 
+// Add settings page for the customizer
 function ftc_customizer_settings_page() {
-    add_menu_page('Food Truck Customizer', 'FT Customizer', 'manage_options', 'ftc_customizer', 'ftc_customizer_settings_page_html', 'dashicons-admin-generic');
+    add_menu_page('Food Truck Customizer Settings', 'FT Customizer Settings', 'manage_options', 'ftc_customizer_settings', 'ftc_customizer_settings_page_html', 'dashicons-admin-generic');
 }
 add_action('admin_menu', 'ftc_customizer_settings_page');
 
@@ -263,10 +264,6 @@ function ftc_save_equipment_dimensions($post_id) {
 }
 add_action('save_post_ftc_equipment', 'ftc_save_equipment_dimensions');
 
-// Add settings page for the customizer
-function ftc_customizer_settings_page() {
-    add_menu_page('Food Truck Customizer Settings', 'FT Customizer Settings', 'manage_options', 'ftc_customizer_settings', 'ftc_customizer_settings_page_html', 'dashicons-admin-generic');
-}
 add_action('admin_menu', 'ftc_customizer_settings_page');
 
 function ftc_customizer_settings_page_html() {
