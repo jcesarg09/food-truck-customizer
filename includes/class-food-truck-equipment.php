@@ -68,37 +68,50 @@ class Food_Truck_Equipment {
         add_meta_box( 'equipment_details', __( 'Equipment Details', 'food-truck-customizer' ), array( $this, 'render_equipment_meta_box' ), 'ftc_equipment' );
     }
 
-    public function save_equipment_meta($post_id) {
-        // Check if our nonce is set.
-        if (!isset($_POST['ftc_equipment_nonce'])) {
-            return $post_id;
-        }
-
-        $nonce = $_POST['ftc_equipment_nonce'];
-
-        // Verify that the nonce is valid.
-        if (!wp_verify_nonce($nonce, 'ftc_equipment_data')) {
-            return $post_id;
-        }
-
-        // If this is an autosave, our form has not been submitted, so we don't want to do anything.
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-            return $post_id;
-        }
-
-        // Check the user's permissions.
-        if ('equipment' == $_POST['post_type']) {
-            if (!current_user_can('edit_post', $post_id)) {
-                return $post_id;
-            }
-        }
-
-        // Sanitize user input.
-        $equipment_price = sanitize_text_field($_POST['ftc_equipment_price']);
-
-        // Update the meta field in the database.
-        update_post_meta($post_id, '_ftc_equipment_price', $equipment_price);
+public function save_equipment_meta( $post_id ) {
+    // Check if our nonce is set.
+    if (!isset($_POST['ftc_equipment_nonce'])) {
+        return $post_id;
     }
+
+    $nonce = $_POST['ftc_equipment_nonce'];
+
+    // Verify that the nonce is valid.
+    if (!wp_verify_nonce($nonce, 'ftc_equipment_data')) {
+        return $post_id;
+    }
+
+    // If this is an autosave, our form has not been submitted, so we don't want to do anything.
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return $post_id;
+    }
+
+    // Check the user's permissions.
+    if ('equipment' == $_POST['post_type']) {
+        if (!current_user_can('edit_post', $post_id)) {
+            return $post_id;
+        }
+    }
+
+    // Sanitize user input.
+    $equipment_price = sanitize_text_field($_POST['ftc_equipment_price']);
+    // Update the meta field in the database.
+    update_post_meta($post_id, '_ftc_equipment_price', $equipment_price);
+
+    // Save the meta box data
+    if ( isset( $_POST['ftc_width'] ) ) {
+        update_post_meta( $post_id, '_ftc_width', sanitize_text_field( $_POST['ftc_width'] ) );
+    }
+
+    if ( isset( $_POST['ftc_height'] ) ) {
+        update_post_meta( $post_id, '_ftc_height', sanitize_text_field( $_POST['ftc_height'] ) );
+    }
+
+    if ( isset( $_POST['ftc_orientation'] ) ) {
+        update_post_meta( $post_id, '_ftc_orientation', sanitize_text_field( $_POST['ftc_orientation'] ) );
+    }
+}
+
 
     // Render the Equipment meta box.
 public function render_equipment_meta_box( $post ) {
@@ -138,26 +151,6 @@ public function render_equipment_meta_box( $post ) {
 
 }
 
-// Save the Equipment meta box data.
-public function save_equipment_meta( $post_id ) {
-    // ... [rest of the function remains the same]
-
-    // Save the meta box data
-    if ( isset( $_POST['ftc_width'] ) ) {
-        update_post_meta( $post_id, '_ftc_width', sanitize_text_field( $_POST['ftc_width'] ) );
-    }
-
-    if ( isset( $_POST['ftc_height'] ) ) {
-        update_post_meta( $post_id, '_ftc_height', sanitize_text_field( $_POST['ftc_height'] ) );
-    }
-
-    if ( isset( $_POST['ftc_orientation'] ) ) {
-        update_post_meta( $post_id, '_ftc_orientation', sanitize_text_field( $_POST['ftc_orientation'] ) );
-    }
-
-    // ... [rest of the function remains the same]
-
-}
 }
 function initialize_food_truck_equipment() {
     // Instantiate the Food_Truck_Equipment class
