@@ -65,7 +65,6 @@ function ftc_settings_page_html() {
             ?>
         </form>
     </div>
-    <?php
 
 // Function to add item to WooCommerce cart
 function add_equipment_items_to_cart() {
