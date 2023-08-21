@@ -266,27 +266,6 @@ add_action('save_post_ftc_equipment', 'ftc_save_equipment_dimensions');
 
 add_action('admin_menu', 'ftc_customizer_settings_page');
 
-function ftc_customizer_settings_page_html() {
-    // Check user capabilities
-    if (!current_user_can('manage_options')) {
-        return;
-    }
-    ?>
-    <div class="wrap">
-        <h1><?= esc_html(get_admin_page_title()); ?></h1>
-        <form action="options.php" method="post">
-            <?php
-            // Output security fields for the registered setting "ftc_customizer_settings"
-            settings_fields('ftc_customizer_settings');
-            // Output setting sections and their fields
-            do_settings_sections('ftc_customizer_settings');
-            // Output save settings button
-            submit_button('Save Settings');
-            ?>
-        </form>
-    </div>
-    <?php
-}
 
 function ftc_register_customizer_settings() {
     // Register a new setting for "ftc_customizer_settings" page
