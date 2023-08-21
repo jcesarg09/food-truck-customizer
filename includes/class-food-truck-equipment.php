@@ -56,7 +56,6 @@ class Food_Truck_Equipment {
             'public'             => true,
             'label'              => 'Equipment',
             'menu_icon'          => 'dashicons-hammer',
-            'supports'           => array('title', 'editor', 'thumbnail'),
         );
 
         register_post_type( 'ftc_equipment', $args );
