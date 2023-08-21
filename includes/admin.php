@@ -92,9 +92,45 @@ function ftc_customizer_settings_page_html() {
     <?php
 }
 function ftc_register_customizer_settings() {
-    // Register a new setting for "ftc_customizer" page
+    // Register settings for "ftc_customizer_settings" page
+    register_setting('ftc_customizer_settings', 'ftc_default_template');
+    register_setting('ftc_customizer_settings', 'ftc_grid_size');
+    register_setting('ftc_customizer_settings', 'ftc_default_orientation');
+
+    // Register settings for "ftc_customizer" page
     register_setting('ftc_customizer', 'ftc_base_price');
     register_setting('ftc_customizer', 'ftc_tax_rate');
+
+    // Register a new section in the "ftc_customizer_settings" page
+    add_settings_section(
+        'ftc_customizer_section',
+        'Customizer Settings',
+        'ftc_customizer_section_callback',
+        'ftc_customizer_settings'
+    );
+
+    // Register fields in the "ftc_customizer_section" section, inside the "ftc_customizer_settings" page
+    add_settings_field(
+        'ftc_default_template_field',
+        'Default Food Truck/Trailer Template',
+        'ftc_default_template_field_callback',
+        'ftc_customizer_settings',
+        'ftc_customizer_section'
+    );
+    add_settings_field(
+        'ftc_grid_size_field',
+        'Grid Size',
+        'ftc_grid_size_field_callback',
+        'ftc_customizer_settings',
+        'ftc_customizer_section'
+    );
+    add_settings_field(
+        'ftc_default_orientation_field',
+        'Default Orientation',
+        'ftc_default_orientation_field_callback',
+        'ftc_customizer_settings',
+        'ftc_customizer_section'
+    );
 
     // Register a new section in the "ftc_customizer" page
     add_settings_section(
@@ -120,6 +156,7 @@ function ftc_register_customizer_settings() {
         'ftc_pricing_section'
     );
 }
+
 add_action('admin_init', 'ftc_register_customizer_settings');
 
 // Register the grid size setting
@@ -266,44 +303,6 @@ add_action('save_post_ftc_equipment', 'ftc_save_equipment_dimensions');
 
 add_action('admin_menu', 'ftc_customizer_settings_page');
 
-
-function ftc_register_customizer_settings() {
-    // Register a new setting for "ftc_customizer_settings" page
-    register_setting('ftc_customizer_settings', 'ftc_default_template');
-    register_setting('ftc_customizer_settings', 'ftc_grid_size');
-    register_setting('ftc_customizer_settings', 'ftc_default_orientation');
-
-    // Register a new section in the "ftc_customizer_settings" page
-    add_settings_section(
-        'ftc_customizer_section',
-        'Customizer Settings',
-        'ftc_customizer_section_callback',
-        'ftc_customizer_settings'
-    );
-
-    // Register fields in the "ftc_customizer_section" section, inside the "ftc_customizer_settings" page
-    add_settings_field(
-        'ftc_default_template_field',
-        'Default Food Truck/Trailer Template',
-        'ftc_default_template_field_callback',
-        'ftc_customizer_settings',
-        'ftc_customizer_section'
-    );
-    add_settings_field(
-        'ftc_grid_size_field',
-        'Grid Size',
-        'ftc_grid_size_field_callback',
-        'ftc_customizer_settings',
-        'ftc_customizer_section'
-    );
-    add_settings_field(
-        'ftc_default_orientation_field',
-        'Default Orientation',
-        'ftc_default_orientation_field_callback',
-        'ftc_customizer_settings',
-        'ftc_customizer_section'
-    );
-}
 add_action('admin_init', 'ftc_register_customizer_settings');
 
 function ftc_customizer_section_callback() {
